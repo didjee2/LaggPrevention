@@ -1,4 +1,4 @@
-package com.dbsoftwares.laggprevention.preventers;
+package com.dbsoftwares.laggprevention.enums;
 
 /*
  * Created by DBSoftwares on 30 april 2017
