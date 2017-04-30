@@ -1,0 +1,22 @@
+enabledworlds:
+  use: true
+  worlds:
+  - 'world'
+
+disabledworlds:
+  use: false
+  worlds:
+  - 'test'
+
+checks:
+  entities:
+    # How many entities are allowed in 1 chunk of 16 x 16 ?
+    # If above the limit, no entities will spawn in this chunk.
+    max-per-chunk:
+      total: 50
+      mobs:
+        pig: 10
+        sheep: 10
+        zombie: 8
+    # If set on true, LaggPrevention will kill several entities in a chunk if above the limit.
+    kill-if-above: false

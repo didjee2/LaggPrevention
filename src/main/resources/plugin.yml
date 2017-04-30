@@ -1,0 +1,5 @@
+name: LaggPrevention
+version: ${project.version}
+main: com.dbsoftwares.laggprevention.LaggPrevention
+author: didjee2
+description: Ban that lagg out of your server with LaggPrevention!
