@@ -10,13 +10,17 @@ disabledworlds:
 
 checks:
   entities:
-    # How many entities are allowed in 1 chunk of 16 x 16 ?
-    # If above the limit, no entities will spawn in this chunk.
     max-per-chunk:
+      # How many entities are allowed in 1 chunk of 16 * 16 ?
+      # If above the limit, no entities will spawn in this chunk.
+      # The higher this is, the more entities you can have on your world.
+      # Small calculation: 50 / (16 * 16) = 0.20 mobs per block, or 1 mob/5 blocks.
       total: 50
+      # For a mob list, take a look at https://github.com/didjee2/LaggPrevention/wiki/Entities
+      # This limits mobs separate from the total limit.
       mobs:
         pig: 10
         sheep: 10
         zombie: 8
-    # If set on true, LaggPrevention will kill several entities in a chunk if above the limit.
+    # If set on true, LaggPrevention will kill all entities above the max limit in a chunk.
     kill-if-above: false

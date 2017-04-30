@@ -9,9 +9,41 @@ package com.dbsoftwares.laggprevention.preventers;
 
 import com.dbsoftwares.laggprevention.LaggPrevention;
 import com.dbsoftwares.laggprevention.data.ConfigManager;
+import com.dbsoftwares.laggprevention.enums.CheckType;
+import lombok.Getter;
 import org.bukkit.World;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public abstract class Check {
+
+    public LaggPrevention instance;
+    @Getter public CheckType type;
+    private BukkitTask task;
+
+    public Check(LaggPrevention instance, CheckType type) {
+        this.instance = instance;
+        this.type = type;
+
+        start();
+    }
+
+    public void start() {
+        this.task = new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                tick();
+            }
+
+        }.runTaskTimer(instance, tickDelay(), tickDelay());
+    }
+
+    public void cancel() {
+        if(task != null) {
+            task.cancel();
+        }
+    }
 
     public Boolean canTick(World world) {
         ConfigManager configManager = LaggPrevention.getInstance().getConfigManager();
@@ -35,4 +67,8 @@ public abstract class Check {
     }
 
     public abstract void tick();
+
+    public abstract Integer tickDelay();
+
+
 }

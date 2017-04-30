@@ -7,7 +7,12 @@ package com.dbsoftwares.laggprevention.enums;
  * May only be used for CentrixPVP
  */
 
+import com.google.common.collect.Lists;
+import org.bukkit.Chunk;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+
+import java.util.List;
 
 public enum LaggEntity {
 
@@ -55,5 +60,55 @@ public enum LaggEntity {
 
     public EntityType[] getEntityTypes() {
         return entityTypes;
+    }
+
+    public static LaggEntity getByEntity(EntityType type) {
+        for(LaggEntity entity : LaggEntity.values()) {
+            for(EntityType et : entity.getEntityTypes()) {
+                if(et.equals(type)) {
+                    return entity;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static LaggEntity getByEntity(Entity entity) {
+        return getByEntity(entity.getType());
+    }
+
+    public static Boolean isKnown(EntityType type) {
+        return getByEntity(type) != null;
+    }
+
+    public static Boolean isKnown(Entity entity) {
+        return isKnown(entity.getType());
+    }
+
+    public static List<Entity> getKnownEntities(Chunk chunk) {
+        List<Entity> entities = Lists.newArrayList();
+
+        for(Entity entity : chunk.getEntities()) {
+            if(isKnown(entity)) {
+                entities.add(entity);
+            }
+        }
+
+        return entities;
+    }
+
+    public static List<Entity> getKnownEntities(LaggEntity laggEntity, Chunk chunk) {
+        List<Entity> entities = Lists.newArrayList();
+
+        for(Entity entity : chunk.getEntities()) {
+            LaggEntity le = getByEntity(entity);
+            if(le == null) continue;
+
+            if(laggEntity.equals(le)) {
+                entities.add(entity);
+            }
+        }
+
+        return entities;
     }
 }
