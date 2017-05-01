@@ -119,4 +119,9 @@ public class EntityCheck extends Check implements Listener {
             }
         }
     }
+
+    @Override
+    public void restartCheck() {
+        super.restart();
+    }
 }

@@ -11,6 +11,7 @@ import com.dbsoftwares.laggprevention.commands.LaggPreventionCommand;
 import com.dbsoftwares.laggprevention.data.ConfigManager;
 import com.dbsoftwares.laggprevention.preventers.Check;
 import com.dbsoftwares.laggprevention.preventers.entity.EntityCheck;
+import com.dbsoftwares.laggprevention.preventers.item.ItemCheck;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -20,28 +21,46 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LaggPrevention extends JavaPlugin {
 
+    @Getter private static final Logger Log = Logger.getLogger("LaggPrevention");
     @Getter private static LaggPrevention instance;
     @Getter private ConfigManager configManager;
     @Getter private List<Check> checks = Lists.newArrayList();
 
     public void onEnable(){
+        Long begin = System.currentTimeMillis();
         instance = this;
 
+        Log.log(Level.INFO, "[LaggPrevention] Loading configuration ...");
         configManager = new ConfigManager(this);
         configManager.load();
+        Log.log(Level.INFO, "[LaggPrevention] Loaded configuration");
 
+        Log.log(Level.INFO, "[LaggPrevention] Loading commands ...");
         registerCommand(new LaggPreventionCommand(this));
+        Log.log(Level.INFO, "[LaggPrevention] Loaded 1 command ");
 
+        Log.log(Level.INFO, "[LaggPrevention] Loading checks ...");
         if(configManager.getEntityCheckData() != null) {
+            Log.log(Level.INFO, "[LaggPrevention] Loading EntityCheck ...");
             checks.add(new EntityCheck(this));
+            Log.log(Level.INFO, "[LaggPrevention] Loaded EntityCheck");
         }
+        if(configManager.getItemCheckData() != null) {
+            Log.log(Level.INFO, "[LaggPrevention] Loading ItemCheck ...");
+            checks.add(new ItemCheck(this));
+            Log.log(Level.INFO, "[LaggPrevention] Loaded ItemCheck");
+        }
+        Log.log(Level.INFO, "[LaggPrevention] Loaded " + checks.size() + " checks");
+
+        Log.log(Level.INFO, "[LaggPrevention] LaggPrevention has been loaded in " + (System.currentTimeMillis() - begin) + "ms!");
     }
 
     /*

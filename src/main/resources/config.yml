@@ -8,6 +8,9 @@ disabledworlds:
   worlds:
   - 'test'
 
+# All the possible checks are listed here by default.
+# If you don't want to use a certain check, just remove the part.
+# You can for example remove the 'entities' section to remove the entity check.
 checks:
   entities:
     max-per-chunk:
@@ -24,3 +27,33 @@ checks:
         zombie: 8
     # If set on true, LaggPrevention will kill all entities above the max limit in a chunk.
     kill-if-above: false
+  items:
+    # How many items are allowed in 1 chunk of 16 * 16 ?
+    # If above the limit, LaggPreventer will automatically remove the items.
+    # Set to 0 to disable.
+    # Small calculation: 256 / (16 * 16) = 1 item per block.
+    max-per-chunk: 256
+    # How many Items should be allowed on the ground?
+    # If above, a Lagg Clear will be executed within the installed time.
+    # Set to 0 to disable, disabled by default.
+    max-in-world: 0
+    item-clear:
+      # The delay of the item clear runnable, set to 0 to disable.
+      # This clears all the items in all the enabled worlds.
+      delay: 300
+      clear-message: '&c&lLaggPrevent &8» &6Cleared all ground items! Removed &b%amount% &6entities.'
+      clear-incoming:
+        # 30 seconds till clear execution
+        30: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
+        # 10 seconds till clear execution.
+        10: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
+        # 5 seconds till clear execution.
+        5: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
+        # 4 seconds till clear execution.
+        4: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
+        # 3 seconds till clear execution.
+        3: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
+        # 2 seconds till clear execution.
+        2: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
+        # 1 seconds till clear execution.
+        1: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6second!'

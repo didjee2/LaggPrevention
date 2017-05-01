@@ -8,5 +8,5 @@ package com.dbsoftwares.laggprevention.enums;
  */
 
 public enum CheckType {
-    ENTITY
+    ENTITY, ITEM
 }

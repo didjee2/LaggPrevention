@@ -8,6 +8,7 @@ package com.dbsoftwares.laggprevention.commands;
  */
 
 import com.dbsoftwares.laggprevention.LaggPrevention;
+import com.dbsoftwares.laggprevention.preventers.Check;
 import com.dbsoftwares.laggprevention.utils.C;
 import com.google.common.collect.Lists;
 import org.bukkit.command.Command;
@@ -31,8 +32,15 @@ public class LaggPreventionCommand extends Command {
                     sender.sendMessage(C.c("&cYou don't have the permission to use this command!"));
                     return false;
                 }
+                sender.sendMessage(C.c("&6Reloading &bconfiguration &6...!"));
                 instance.getConfigManager().reload();
-                sender.sendMessage(C.c("&6The config has been &breloaded&6!"));
+                sender.sendMessage(C.c("&6Reloaded &bconfiguration&6!"));
+                sender.sendMessage(C.c("&6Reloading &bchecks&6!"));
+                for(Check check : instance.getChecks()) {
+                    check.restartCheck();
+                    sender.sendMessage(C.c("&6- Reloaded &b" + check.getType().toString().toLowerCase() + "check&6!"));
+                }
+                sender.sendMessage(C.c("&6Reloaded &bchecks&6!"));
                 return true;
             }
         }
@@ -42,6 +50,6 @@ public class LaggPreventionCommand extends Command {
 
     public void help(CommandSender sender) {
         sender.sendMessage(C.c("&bLaggPrevention &6help list:"));
-        sender.sendMessage(C.c("&b- &6/laggprevention reload &e| Reloads the config."));
+        sender.sendMessage(C.c("&6- /laggprevention reload &e| Reloads the config."));
     }
 }

@@ -63,12 +63,18 @@ public abstract class Check {
                 }
             }
         }
-        return false;
+
+        return true;
     }
 
     public abstract void tick();
 
     public abstract Integer tickDelay();
 
+    public abstract void restartCheck();
 
+    public void restart() {
+        cancel();
+        start();
+    }
 }
