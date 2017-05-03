@@ -57,3 +57,42 @@ checks:
         2: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6seconds!'
         # 1 seconds till clear execution.
         1: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6second!'
+  tps:
+    # To disable a check, set TPS to 0, or for mob kills, remove it from the section.
+    item-clear:
+      # Execute when the TPS is below the given number, 7 by default.
+      execute-if-below: 7
+      # Time between triggers (seconds)
+      cooldown: 60
+      clear-message: '&c&lLaggReaction &8» &6Cleared all ground items! Removed &b%amount% &6entities.'
+    mob-kill:
+      remove-message: '&c&lLaggReaction &8» &6Removed &b%amount% &6mobs in reaction of lagg!'
+      # For a mob list, take a look at https://github.com/didjee2/LaggPrevention/wiki/Entities
+      zombie:
+        # The zombie killing will be triggered if TPS is below 7
+        kill-below-tps: 7
+        # Time between triggers (seconds)
+        cooldown: 120
+        # How many zombies do you want to be killed? Type 0 to kill them all.
+        amount-to-kill: 0
+      skeleton:
+        # The skeleton killing will be triggered if TPS is below 7
+        kill-below-tps: 7
+        # Time between triggers (seconds)
+        cooldown: 120
+        # How many skeletons do you want to be killed? Type 0 to kill them all.
+        amount-to-kill: 0
+      pig:
+        # The pig killing will be triggered if TPS is below 7
+        kill-below-tps: 4
+        # Time between triggers (seconds)
+        cooldown: 120
+        # How many pigs do you want to be killed? Type 0 to kill them all.
+        amount-to-kill: 250
+      sheep:
+        # The sheep killing will be triggered if TPS is below 7
+        kill-below-tps: 4
+        # Time between triggers (seconds)
+        cooldown: 120
+        # How many sheeps do you want to be killed? Type 0 to kill them all.
+        amount-to-kill: 250

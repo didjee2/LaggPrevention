@@ -12,6 +12,7 @@ import com.dbsoftwares.laggprevention.data.ConfigManager;
 import com.dbsoftwares.laggprevention.preventers.Check;
 import com.dbsoftwares.laggprevention.preventers.entity.EntityCheck;
 import com.dbsoftwares.laggprevention.preventers.item.ItemCheck;
+import com.dbsoftwares.laggprevention.preventers.lagg.LaggCheck;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -38,29 +39,29 @@ public class LaggPrevention extends JavaPlugin {
         Long begin = System.currentTimeMillis();
         instance = this;
 
-        Log.log(Level.INFO, "[LaggPrevention] Loading configuration ...");
         configManager = new ConfigManager(this);
         configManager.load();
         Log.log(Level.INFO, "[LaggPrevention] Loaded configuration");
 
-        Log.log(Level.INFO, "[LaggPrevention] Loading commands ...");
         registerCommand(new LaggPreventionCommand(this));
         Log.log(Level.INFO, "[LaggPrevention] Loaded 1 command ");
 
         Log.log(Level.INFO, "[LaggPrevention] Loading checks ...");
         if(configManager.getEntityCheckData() != null) {
-            Log.log(Level.INFO, "[LaggPrevention] Loading EntityCheck ...");
             checks.add(new EntityCheck(this));
             Log.log(Level.INFO, "[LaggPrevention] Loaded EntityCheck");
         }
         if(configManager.getItemCheckData() != null) {
-            Log.log(Level.INFO, "[LaggPrevention] Loading ItemCheck ...");
             checks.add(new ItemCheck(this));
             Log.log(Level.INFO, "[LaggPrevention] Loaded ItemCheck");
         }
+        if(configManager.getTPSCheckData() != null) {
+            checks.add(new LaggCheck(this));
+            Log.log(Level.INFO, "[LaggPrevention] Loaded TPSCheck");
+        }
         Log.log(Level.INFO, "[LaggPrevention] Loaded " + checks.size() + " checks");
 
-        Log.log(Level.INFO, "[LaggPrevention] LaggPrevention has been loaded in " + (System.currentTimeMillis() - begin) + "ms!");
+        Log.log(Level.INFO, "[LaggPrevention] LaggPrevention has been enabled in " + (System.currentTimeMillis() - begin) + "ms!");
     }
 
     /*

@@ -10,6 +10,7 @@ package com.dbsoftwares.laggprevention.data;
 import com.dbsoftwares.laggprevention.LaggPrevention;
 import com.dbsoftwares.laggprevention.data.checks.EntityCheckData;
 import com.dbsoftwares.laggprevention.data.checks.ItemCheckData;
+import com.dbsoftwares.laggprevention.data.checks.TPSCheckData;
 import com.dbsoftwares.laggprevention.enums.LaggEntity;
 import com.dbsoftwares.laggprevention.utils.MathUtils;
 import com.google.common.collect.Maps;
@@ -85,6 +86,37 @@ public class ConfigManager {
         } else {
             data.put("itemcheck", null);
         }
+
+        if(config.contains("checks.tps")) {
+            Map<String, Integer> tpsTriggers = Maps.newHashMap();
+            Map<String, Integer> cooldowns = Maps.newHashMap();
+            Map<LaggEntity, Integer> amountToKill = Maps.newHashMap();
+
+            if(config.contains("checks.tps.item-clear")) {
+                tpsTriggers.put("item-clear", config.getInt("checks.tps.item-clear.execute-if-below"));
+                cooldowns.put("item-clear", config.getInt("checks.tps.item-clear.cooldown"));
+            }
+            if(config.contains("checks.tps.mob-kill")) {
+                ConfigurationSection section = config.getConfigurationSection("checks.tps.mob-kill");
+                for(String key : section.getKeys(false)) {
+                    try {
+                        LaggEntity entity = LaggEntity.valueOf(key.toUpperCase());
+
+                        Integer tps = section.getInt(key + ".kill-below-tps");
+                        Integer amount = section.getInt(key + ".amount-to-kill");
+                        Integer cooldown = section.getInt(key + ".cooldown");
+
+                        tpsTriggers.put(entity.toString().toLowerCase(), tps);
+                        amountToKill.put(entity, amount);
+                        cooldowns.put(entity.toString().toLowerCase(), cooldown);
+                    } catch (Exception ignored) {}
+                }
+            }
+
+            data.put("tpscheck", new TPSCheckData(tpsTriggers, config.getString("checks.tps.item-clear.clear-message"), amountToKill, cooldowns, config.getString("checks.tps.mob-kill.remove-message")));
+        } else {
+            data.put("tps", null);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -103,5 +135,9 @@ public class ConfigManager {
 
     public ItemCheckData getItemCheckData() {
         return (ItemCheckData) data.get("itemcheck");
+    }
+
+    public TPSCheckData getTPSCheckData() {
+        return (TPSCheckData) data.get("tpscheck");
     }
 }
