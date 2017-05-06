@@ -37,6 +37,7 @@ public class LaggPrevention extends JavaPlugin {
     @Getter private List<Check> checks = Lists.newArrayList();
     @Getter private LaggHalt laggHalt;
 
+    @Override
     public void onEnable(){
         Long begin = System.currentTimeMillis();
         instance = this;
@@ -63,9 +64,16 @@ public class LaggPrevention extends JavaPlugin {
         }
         Log.log(Level.INFO, "[LaggPrevention] Loaded " + checks.size() + " checks");
 
-        laggHalt = new LaggHalt();
+        laggHalt = new LaggHalt(this);
 
         Log.log(Level.INFO, "[LaggPrevention] LaggPrevention has been enabled in " + (System.currentTimeMillis() - begin) + "ms!");
+    }
+
+    @Override
+    public void onDisable() {
+        if(laggHalt.isEnabled()) {
+            laggHalt.disable();
+        }
     }
 
     /*
