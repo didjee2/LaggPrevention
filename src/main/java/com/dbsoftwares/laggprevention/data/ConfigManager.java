@@ -91,13 +91,21 @@ public class ConfigManager {
             Map<String, Integer> tpsTriggers = Maps.newHashMap();
             Map<String, Integer> cooldowns = Maps.newHashMap();
             Map<LaggEntity, Integer> amountToKill = Maps.newHashMap();
+            Integer averageTPS = config.getInt("checks.tps.use-average-tps");
 
+            String clearMessage = "";
+            String mobRemoveMessage = "";
             if(config.contains("checks.tps.item-clear")) {
                 tpsTriggers.put("item-clear", config.getInt("checks.tps.item-clear.execute-if-below"));
                 cooldowns.put("item-clear", config.getInt("checks.tps.item-clear.cooldown"));
+                clearMessage = config.getString("checks.tps.item-clear.clear-message");
+            } else {
+                tpsTriggers.put("item-clear", 0);
+                cooldowns.put("item-clear", 0);
             }
             if(config.contains("checks.tps.mob-kill")) {
                 ConfigurationSection section = config.getConfigurationSection("checks.tps.mob-kill");
+                mobRemoveMessage = section.getString("remove-message");
                 for(String key : section.getKeys(false)) {
                     try {
                         LaggEntity entity = LaggEntity.valueOf(key.toUpperCase());
@@ -112,10 +120,25 @@ public class ConfigManager {
                     } catch (Exception ignored) {}
                 }
             }
+            Integer laggHaltDuration = 0;
+            String laggHaltEnabled = "";
+            String laggHaltDisabled = "";
+            if(config.contains("checks.tps.lagg-halt")) {
+                ConfigurationSection section = config.getConfigurationSection("checks.tps.lagg-halt");
 
-            data.put("tpscheck", new TPSCheckData(tpsTriggers, config.getString("checks.tps.item-clear.clear-message"), amountToKill, cooldowns, config.getString("checks.tps.mob-kill.remove-message")));
+                tpsTriggers.put("lagg-halt", section.getInt("execute-if-below"));
+                cooldowns.put("lagg-halt", section.getInt("cooldown"));
+                laggHaltDuration = section.getInt("duration");
+                laggHaltEnabled = section.getString("enabled");
+                laggHaltDisabled = section.getString("disabled");
+            } else {
+                tpsTriggers.put("lagg-halt", 0);
+                cooldowns.put("lagg-halt", 0);
+            }
+            data.put("tpscheck", new TPSCheckData(averageTPS, tpsTriggers, clearMessage, amountToKill, cooldowns,
+                    mobRemoveMessage, laggHaltDuration, laggHaltEnabled, laggHaltDisabled));
         } else {
-            data.put("tps", null);
+            data.put("tpscheck", null);
         }
     }
 

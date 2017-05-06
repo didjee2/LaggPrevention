@@ -1,4 +1,4 @@
-package com.dbsoftwares.laggprevention.preventers.item;
+package com.dbsoftwares.laggprevention.checks.item;
 
 /*
  * Created by DBSoftwares on 30 april 2017
@@ -8,14 +8,11 @@ package com.dbsoftwares.laggprevention.preventers.item;
  */
 
 import com.dbsoftwares.laggprevention.LaggPrevention;
-import com.dbsoftwares.laggprevention.data.checks.EntityCheckData;
 import com.dbsoftwares.laggprevention.data.checks.ItemCheckData;
 import com.dbsoftwares.laggprevention.enums.CheckType;
-import com.dbsoftwares.laggprevention.enums.LaggEntity;
-import com.dbsoftwares.laggprevention.preventers.Check;
+import com.dbsoftwares.laggprevention.checks.Check;
 import com.dbsoftwares.laggprevention.utils.C;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -23,7 +20,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 
 import java.util.List;
-import java.util.Map;
 
 public class ItemCheck extends Check {
 

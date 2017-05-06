@@ -1,4 +1,4 @@
-package com.dbsoftwares.laggprevention.preventers.entity;
+package com.dbsoftwares.laggprevention.checks.entity;
 
 /*
  * Created by DBSoftwares on 30 april 2017
@@ -11,7 +11,7 @@ import com.dbsoftwares.laggprevention.LaggPrevention;
 import com.dbsoftwares.laggprevention.data.checks.EntityCheckData;
 import com.dbsoftwares.laggprevention.enums.CheckType;
 import com.dbsoftwares.laggprevention.enums.LaggEntity;
-import com.dbsoftwares.laggprevention.preventers.Check;
+import com.dbsoftwares.laggprevention.checks.Check;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.bukkit.Bukkit;

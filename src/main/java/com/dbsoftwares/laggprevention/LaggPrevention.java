@@ -9,10 +9,11 @@ package com.dbsoftwares.laggprevention;
 
 import com.dbsoftwares.laggprevention.commands.LaggPreventionCommand;
 import com.dbsoftwares.laggprevention.data.ConfigManager;
-import com.dbsoftwares.laggprevention.preventers.Check;
-import com.dbsoftwares.laggprevention.preventers.entity.EntityCheck;
-import com.dbsoftwares.laggprevention.preventers.item.ItemCheck;
-import com.dbsoftwares.laggprevention.preventers.lagg.LaggCheck;
+import com.dbsoftwares.laggprevention.checks.Check;
+import com.dbsoftwares.laggprevention.checks.entity.EntityCheck;
+import com.dbsoftwares.laggprevention.checks.item.ItemCheck;
+import com.dbsoftwares.laggprevention.checks.lagg.LaggCheck;
+import com.dbsoftwares.laggprevention.preventions.LaggHalt;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ public class LaggPrevention extends JavaPlugin {
     @Getter private static LaggPrevention instance;
     @Getter private ConfigManager configManager;
     @Getter private List<Check> checks = Lists.newArrayList();
+    @Getter private LaggHalt laggHalt;
 
     public void onEnable(){
         Long begin = System.currentTimeMillis();
@@ -60,6 +62,8 @@ public class LaggPrevention extends JavaPlugin {
             Log.log(Level.INFO, "[LaggPrevention] Loaded TPSCheck");
         }
         Log.log(Level.INFO, "[LaggPrevention] Loaded " + checks.size() + " checks");
+
+        laggHalt = new LaggHalt();
 
         Log.log(Level.INFO, "[LaggPrevention] LaggPrevention has been enabled in " + (System.currentTimeMillis() - begin) + "ms!");
     }

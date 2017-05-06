@@ -9,8 +9,7 @@ package com.dbsoftwares.laggprevention.enums;
 
 import com.google.common.collect.Lists;
 import org.bukkit.Chunk;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.*;
 
 import java.util.List;
 
@@ -50,12 +49,17 @@ public enum LaggEntity {
     IRON_GOLEM(EntityType.IRON_GOLEM),
     RABBIT(EntityType.RABBIT),
     POLAR_BEAR(EntityType.POLAR_BEAR),
-    LLAMA(EntityType.LLAMA);
+    LLAMA(EntityType.LLAMA),
+    INTENSIVE();
 
     EntityType[] entityTypes;
 
     LaggEntity(EntityType... entities) {
         entityTypes = entities;
+    }
+
+    LaggEntity() {
+        entityTypes = new EntityType[]{};
     }
 
     public EntityType[] getEntityTypes() {
@@ -70,11 +74,26 @@ public enum LaggEntity {
                 }
             }
         }
+        if(type.equals(EntityType.DROPPED_ITEM) || type.equals(EntityType.PRIMED_TNT) || type.equals(EntityType.EXPERIENCE_ORB) || type.equals(EntityType.FALLING_BLOCK)) {
+            return LaggEntity.INTENSIVE;
+        }
         return null;
     }
 
     public static LaggEntity getByEntity(Entity entity) {
-        return getByEntity(entity.getType());
+        if(getByEntity(entity.getType()) != null) {
+            return getByEntity(entity.getType());
+        } else if(entity instanceof Item
+                || entity instanceof TNTPrimed
+                || entity instanceof ExperienceOrb
+                || entity instanceof FallingBlock
+                || (entity instanceof LivingEntity
+                && !(entity instanceof Tameable)
+                && !(entity instanceof Player)
+                && !(entity instanceof ArmorStand))) {
+            return LaggEntity.INTENSIVE;
+        }
+        return null;
     }
 
     public static Boolean isKnown(EntityType type) {
@@ -82,7 +101,7 @@ public enum LaggEntity {
     }
 
     public static Boolean isKnown(Entity entity) {
-        return isKnown(entity.getType());
+        return getByEntity(entity) != null;
     }
 
     public static List<Entity> getKnownEntities(Chunk chunk) {

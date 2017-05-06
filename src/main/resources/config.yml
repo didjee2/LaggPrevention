@@ -58,6 +58,9 @@ checks:
         # 1 seconds till clear execution.
         1: '&c&lLaggPrevent &8» &6Ground items will be cleared in &b%time% &6second!'
   tps:
+    # This will make the server use the average TPS of the last X seconds.
+    # Default is 15, so the TPS will be an average of the last 15 seconds.
+    use-average-tps: 15
     # To disable a check, set TPS to 0, or for mob kills, remove it from the section.
     item-clear:
       # Execute when the TPS is below the given number, 7 by default.
@@ -68,6 +71,8 @@ checks:
     mob-kill:
       remove-message: '&c&lLaggReaction &8» &6Removed &b%amount% &6mobs in reaction of lagg!'
       # For a mob list, take a look at https://github.com/didjee2/LaggPrevention/wiki/Entities
+      # The mob type 'intensive' contains all mobs which may cause lagg:
+      # Ground Items, TNT, Experience on ground, Falling blocks, Living Entities (except for players, tamed animals & armorstands)
       zombie:
         # The zombie killing will be triggered if TPS is below 7
         kill-below-tps: 7
@@ -96,3 +101,15 @@ checks:
         cooldown: 120
         # How many sheeps do you want to be killed? Type 0 to kill them all.
         amount-to-kill: 250
+    # This will halt all the several server functions in order to reduce the server lagg.
+    # All Intensive Entities will be killed, and multiple block events, as Block Ignite, Block Face, Water & Lava flow, ... will be disabled.
+    lagg-halt:
+      enabled: '&c&lLaggReaction &8» &6LaggHalt has been &benabled &6for the next &b2 &6minutes!'
+      disabled: '&c&lLaggReaction &8» &6LaggHalt has been &bdisabled&6!'
+      # TPS Trigger, set to 0 to disable.
+      execute-if-below: 5
+      # Time between triggers (seconds)
+      # This cooldown gets activated after lagg halt has been disabled.
+      cooldown: 120
+      # Lagg Halt duration (in seconds)
+      duration: 120

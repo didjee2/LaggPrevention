@@ -16,22 +16,27 @@ import java.util.Map;
 @Data
 public class TPSCheckData {
 
+    Integer tpsAverage;
     Map<String, Integer> tpsTriggers;
     String clearMessage;
     Map<LaggEntity, Integer> amountToKill;
     Map<String, Integer> cooldowns;
     String mobRemoveMessage;
+    Integer laggHaltDuration;
+    String laggHaltEnabled;
+    String laggHaltDisabled;
 
-    public TPSCheckData(Map<String, Integer> tpsTriggers, String clearMessage, Map<LaggEntity, Integer> amountToKill, Map<String, Integer> cooldowns, String mobRemoveMessage) {
+    public TPSCheckData(Integer tpsAverage, Map<String, Integer> tpsTriggers, String clearMessage, Map<LaggEntity, Integer> amountToKill,
+                        Map<String, Integer> cooldowns, String mobRemoveMessage, Integer laggHaltDuration, String laggHaltEnabled, String laggHaltDisabled) {
+        this.tpsAverage = tpsAverage;
         this.tpsTriggers = tpsTriggers;
         this.clearMessage = clearMessage;
         this.amountToKill = amountToKill;
         this.cooldowns = cooldowns;
         this.mobRemoveMessage = mobRemoveMessage;
-    }
-
-    public Integer getItemClearTrigger() {
-        return tpsTriggers.get("item-clear");
+        this.laggHaltDuration = laggHaltDuration;
+        this.laggHaltEnabled = laggHaltEnabled;
+        this.laggHaltDisabled = laggHaltDisabled;
     }
 
     public Integer getMobKillTrigger(LaggEntity entity) {
@@ -49,7 +54,19 @@ public class TPSCheckData {
         return cooldowns.get(entity.toString().toLowerCase());
     }
 
+    public Integer getItemClearTrigger() {
+        return tpsTriggers.get("item-clear");
+    }
+
     public Integer getItemClearCooldown() {
         return cooldowns.get("item-clear");
+    }
+
+    public Integer getLaggHaltTrigger() {
+        return tpsTriggers.get("lagg-halt");
+    }
+
+    public Integer getLaggHaltCooldown() {
+        return cooldowns.get("lagg-halt");
     }
 }

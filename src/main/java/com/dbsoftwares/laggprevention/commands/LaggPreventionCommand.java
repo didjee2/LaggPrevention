@@ -8,7 +8,7 @@ package com.dbsoftwares.laggprevention.commands;
  */
 
 import com.dbsoftwares.laggprevention.LaggPrevention;
-import com.dbsoftwares.laggprevention.preventers.Check;
+import com.dbsoftwares.laggprevention.checks.Check;
 import com.dbsoftwares.laggprevention.utils.C;
 import com.google.common.collect.Lists;
 import org.bukkit.command.Command;
