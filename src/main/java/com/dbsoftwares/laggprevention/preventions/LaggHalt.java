@@ -102,50 +102,50 @@ public class LaggHalt implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockIgnite(BlockIgniteEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBurn(BlockBurnEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityExplode(EntityExplodeEvent event) {
-        if(!canExecute(event.getLocation().getWorld())) return;
+        if(!limits.containsKey(event.getLocation().getWorld())) return;
         event.setCancelled(true);
         event.blockList().clear();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLeaveDecay(LeavesDecayEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockForm(BlockFormEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockSpread(BlockSpreadEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockFade(BlockFadeEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockFromTo(BlockFromToEvent event) {
-        if(!canExecute(event.getBlock().getWorld())) return;
+        if(!limits.containsKey(event.getBlock().getWorld())) return;
         event.setCancelled(true);
     }
 
