@@ -8,5 +8,18 @@ package com.dbsoftwares.laggprevention.enums;
  */
 
 public enum CheckType {
-    ENTITY, ITEM, LAGG
+    
+    ENTITY("com.dbsoftwares.laggprevention.checks.entity.EntityCheck"),
+    ITEM("com.dbsoftwares.laggprevention.checks.item.ItemCheck"),
+    LAGG("com.dbsoftwares.laggprevention.checks.lagg.LaggCheck");
+    
+    String clazz;
+    
+    CheckType(String clazz) {
+        this.clazz = clazz;
+    }
+    
+    public String getClazz() {
+        return clazz;
+    }
 }
