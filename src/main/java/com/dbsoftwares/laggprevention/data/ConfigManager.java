@@ -12,6 +12,7 @@ import com.dbsoftwares.laggprevention.data.checks.EntityCheckData;
 import com.dbsoftwares.laggprevention.data.checks.ItemCheckData;
 import com.dbsoftwares.laggprevention.data.checks.TPSCheckData;
 import com.dbsoftwares.laggprevention.enums.LaggEntity;
+import com.dbsoftwares.laggprevention.enums.CheckType;
 import com.dbsoftwares.laggprevention.utils.MathUtils;
 import com.google.common.collect.Maps;
 import org.bukkit.configuration.ConfigurationSection;
@@ -135,10 +136,10 @@ public class ConfigManager {
                 tpsTriggers.put("lagg-halt", 0);
                 cooldowns.put("lagg-halt", 0);
             }
-            data.put("tpscheck", new TPSCheckData(averageTPS, tpsTriggers, clearMessage, amountToKill, cooldowns,
+            data.put("laggcheck", new TPSCheckData(averageTPS, tpsTriggers, clearMessage, amountToKill, cooldowns,
                     mobRemoveMessage, laggHaltDuration, laggHaltEnabled, laggHaltDisabled));
         } else {
-            data.put("tpscheck", null);
+            data.put("laggcheck", null);
         }
     }
 
@@ -161,6 +162,10 @@ public class ConfigManager {
     }
 
     public TPSCheckData getTPSCheckData() {
-        return (TPSCheckData) data.get("tpscheck");
+        return (TPSCheckData) data.get("laggcheck");
+    }
+    
+    public Boolean isEnabled(CheckType type) {
+        return data.get(type.toString().toLowerCase() + "check") != null;
     }
 }
