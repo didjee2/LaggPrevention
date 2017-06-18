@@ -9,6 +9,7 @@ package com.dbsoftwares.laggprevention;
 
 import com.dbsoftwares.laggprevention.commands.LaggPreventionCommand;
 import com.dbsoftwares.laggprevention.data.ConfigManager;
+import com.dbsoftwares.laggprevention.enums.CheckType;
 import com.dbsoftwares.laggprevention.checks.Check;
 import com.dbsoftwares.laggprevention.checks.entity.EntityCheck;
 import com.dbsoftwares.laggprevention.checks.item.ItemCheck;
@@ -50,17 +51,19 @@ public class LaggPrevention extends JavaPlugin {
         Log.log(Level.INFO, "[LaggPrevention] Loaded 1 command ");
 
         Log.log(Level.INFO, "[LaggPrevention] Loading checks ...");
-        if(configManager.getEntityCheckData() != null) {
-            checks.add(new EntityCheck(this));
-            Log.log(Level.INFO, "[LaggPrevention] Loaded EntityCheck");
-        }
-        if(configManager.getItemCheckData() != null) {
-            checks.add(new ItemCheck(this));
-            Log.log(Level.INFO, "[LaggPrevention] Loaded ItemCheck");
-        }
-        if(configManager.getTPSCheckData() != null) {
-            checks.add(new LaggCheck(this));
-            Log.log(Level.INFO, "[LaggPrevention] Loaded TPSCheck");
+        for(CheckType type : CheckType.values()) {
+            if(configManager.isEnabled(type)) {
+                try {
+                    Class<?> clazz = Class.forName(type.getClazz());
+                    
+                    Check check = (Check) clazz.getConstructor(LaggPrevention.class).newInstance(this);
+                    checks.add(check);
+                    
+                    Log.log(Level.INFO, "[LaggPrevention] Loaded " + type.toString().toLowerCase() + "check!");
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         Log.log(Level.INFO, "[LaggPrevention] Loaded " + checks.size() + " checks");
 
